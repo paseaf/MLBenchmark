@@ -1,0 +1,5 @@
+This is the place where we put good resources related to our project.
+
+For example:
+1. python gdal cookbook
+https://pcjericks.github.io/py-gdalogr-cookbook/raster_layers.html#get-raster-band
