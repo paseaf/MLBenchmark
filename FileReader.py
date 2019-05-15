@@ -12,5 +12,5 @@ for file in all_files: # iterate and open each file on the path list
     # read all 3 bands into a numpy array
     ds_arr = np.array(dataset.ReadAsArray()).flatten() # read the dgal dataset into flatted  array
     print(ds_arr)  # print the array
-    print(ds_arr.shape)  # print the shape of the array
-
+    
+print()
