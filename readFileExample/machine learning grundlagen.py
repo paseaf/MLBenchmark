@@ -8,8 +8,7 @@ import os
 import copy
 import math
 import random
-# import gdal
-from PIL import Image
+import gdal
 import numpy as np
 import matplotlib as mpl
 from sklearn.model_selection import train_test_split
@@ -46,7 +45,7 @@ def divide_in_train_test_data(data: [(str, np.ndarray)], testsize: float = 0.8)-
 
     return X_train, X_test, y_train, y_test
         
-def load_images(path: str, file_ending: str=".jpg", percentage: float = 1.0, typ: type = np.float64, is_random: bool = False) -> (np.ndarray):  # use is_random instead of random as random is a module's name
+def load_images(path: str, file_ending: str=".jpg", percentage: float = 1.0, typ: type = np.float64, random: bool = False) -> (np.ndarray):
     """
     Load a percentage of all images in path with matplotlib that have given file_ending
 
@@ -67,18 +66,15 @@ def load_images(path: str, file_ending: str=".jpg", percentage: float = 1.0, typ
     images = []
     data = list(filter(lambda x: x.endswith(file_ending), os.listdir(path))) #all data with given file_ending found in the file
     
-    #randomising if is_random is set
-    if(is_random):
+    #randomising if random is set
+    if(random):
         data = random.shuffle(data)
     
     count = math.ceil(len(data)*percentage) #number of images wanted
 
     #add up of the images
     for name in data[:count] :
-        img_raw = np.asarray(Image.open(path + "/" + name), dtype = typ)  # Pillow.Image supports tif files for future use
-        assert(img_raw.shape == (64, 64, 3))    # check if resolution is right
-        X = img_raw.transpose(2, 0, 1).reshape(3, -1)
-        images += [X]
+        images += [np.asarray(mpl.image.imread(path + "/" + name), dtype = typ).flatten()]
     print( path.split("/")[-1] + " enthält ",len(images) , " Bilder.")
     return np.asarray(images)
 
@@ -160,9 +156,8 @@ def select_biggest(classes: [(str, np.ndarray)], number: int) -> [(str, np.ndarr
     return classes[:number]
 
 if __name__ == '__main__' :
-    # path = "C:/Users/sechs/Downloads/EuroSAT/2750"
-    path = "../Images_RGB"
-    x = load_image_folder(path, file_ending = ".jpg", percentage = 0.02, typ = np.uint8)  # x[1].shape=(num_of_img, 3, 64^2)
+    path = "C:/Users/sechs/Downloads/EuroSAT/2750"
+    x = load_image_folder(path, file_ending = ".jpg", percentage = 0.02, typ = np.uint8)
     x = select_biggest(x, 5)
     print(len(x))
     mylists = divide_in_train_test_data( x, testsize = 0.8)
