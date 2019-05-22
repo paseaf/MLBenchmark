@@ -3,6 +3,9 @@ from fileloader import FileLoader
 
 ################################################################################
 # This file shows how to prepare the control set and 30 test sets from RGB data
+#
+# X.shape = (#samples, #features)
+# Y.shape = (#samples,)
 ################################################################################
 
 """I. Prepare control dataset and 30 subsets:"""
@@ -33,10 +36,10 @@ print(control_set_x.shape, control_set_y.shape)
 
 """Others: Utils of FileLoader object"""
 # .get_class_name(class_id): convert class id to class name
-class_id = train_set_y[0, 3]
-print(f'The class name of y= {class_id} is {jpeg_loader.get_class_name(class_id)}')
+class_id = 0
+print(f'The class name of y={class_id} is {jpeg_loader.get_class_name(class_id)}')
 
 # .get_class_id(class_name): convert class name to class id
 class_name = jpeg_loader.classlist[0]
-print(f'The class id of the class \' {class_name}\' is {jpeg_loader.get_class_id(class_name)}')
+print(f'The class id of the class\' {class_name}\' is {jpeg_loader.get_class_id(class_name)}')
 
