@@ -81,6 +81,7 @@ def modelSVM(train_set_x, train_set_y):
     cv = StratifiedShuffleSplit(n_splits=5, test_size=0.2, random_state=42)
     model = GridSearchCV(SVC(kernel='rbf'), param_grid=param_grid, cv=cv, n_jobs=-1)
     fit = model.fit(train_set_x, train_set_y)
+    print(f"optimal hyper-parameters: {fit.best_params_}")
     return fit
 
 """  
@@ -113,6 +114,7 @@ def modelCT(train_set_x, train_set_y):
     param_grid = {'max_depth':range(1,50), 'min_samples_split':range(1,50)}
     grid = GridSearchCV(ctree, param_grid, cv=5, scoring='roc_auc')
     fit = grid.fit(train_set_x, train_set_y)
+    print(f"optimal hyper-parameters: {fit.best_params_}")
     return fit
 
 """  
@@ -134,4 +136,5 @@ def modelLR(train_set_x, train_set_y):
     kfold = KFold(n_splits=5, random_state=7)
     grid = GridSearchCV(estimator=logreg, param_grid=param_grid, cv=kfold)
     fit = grid.fit(train_set_x, train_set_y)
+    print(f"optimal hyper-parameters: {fit.best_params_}")
     return fit
