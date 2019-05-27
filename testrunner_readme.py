@@ -19,15 +19,18 @@ test_runner.validate_all(validation_method_list=['train', 'all'], acc_idx_name_l
 
 test_runner.set_all_points()    # set acc_points and time points for plotting
 
-"""Get data point objects for plotting"""
+"""Get list of points for plotting"""
 acc_point_list = test_runner.get_acc_points()  # a list of AccPoint objects, each represents one point
 # Number of acc points = #train_subset * #train_method * #acc_idx * #validation_method = 30 * 1 * 2 * 2 = 120
 
-time__point_list = test_runner.get_time_points()    # a list of TimePoints, for the other plotting
+time_point_list = test_runner.get_time_points()    # a list of TimePoints, for the other plotting
 # Number of time points = #train_subset * #train_method * #validation_method = 30 * 1 * 2 = 60
 
-# TODO: plot
 # TODO: Convert AccPoints objects to tuple when necessary
+
+"""Plot"""
+# TODO: plot
+
 
 
 
