@@ -18,20 +18,20 @@ class FileLoader:
         """
         self.root_path = root_path  # path of the parent folder of all classes
         self.files_per_class = files_per_class  # number of pictures to take from each folder
-        self.classlist = os.listdir(root_path)  # generate default class list
+        self.classlist = None  # set later using set_class_list
         self.class_data_map = {}  # initialize class->data map ('AnnualCrop' -> (X, Ystring))
         self.num_of_features = 64*64*3   # TODO: later modify the dimension for tif files.
         self.control_set = ()           # (x, y)
         self.training_subsets = []  # [(x1, y1), (x2, y2), ...]
 
-    def set_class_list(self, classlist):  # set class list manually
+    def set_class_list(self, classlist=None):  # set class list manually
         """
         Specify which classes should be chosen for the test.
-        Default self.class_list includes all sub folders
+        All sub folders will be included by default.
 
         :param classlist: A list of strings. For example, ['AnnualCrop', 'Forest', ...]
         """
-        self.classlist = classlist
+        self.classlist = os.listdir(self.root_path) if classlist is None else classlist
 
     @staticmethod
     def load_class(class_path: str, files_per_class: int, num_of_bands=3, is_random=False):
@@ -51,11 +51,11 @@ class FileLoader:
 
         # shuffle the list of files if necessary
         if is_random:
-            file_names = random.shuffle(file_names)
+            random.shuffle(file_names)  # ransom.shuffle works in place!
         # read files to np array
         for i in range(files_per_class):
             with open(file_names[i], 'rb') as file_stream:
-                img = np.array(Image.open(file_stream)).flatten()
+                img = np.array(Image.open(file_stream)).flatten() / 255.0  # normalization
                 control_set_x[i, :] = img  # write image vector to the i-th row of X
         return control_set_x, control_set_label
 
