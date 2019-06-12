@@ -5,7 +5,7 @@ from readFileExample import allModels as mlm
 # TODO: determine parameters for all models before training
 mlm_dict = {
     'lda': mlm.modelLDA,
-    'kknn': mlm.KNeighborsClassifier,
+    'kknn': mlm.modelKNN,
     'randomForest': mlm.modelForest,
     'svm': mlm.modelSVM,
     'mlp': mlm.modelMLP,

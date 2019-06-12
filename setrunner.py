@@ -76,7 +76,7 @@ class SetRunner:
             for validation_method in self.validation_method_list:
                 result = result_recorder.results_dict[validation_method]
                 test_time = result.test_time
-                time_point = TimePoint(train_method_name, num_of_files, train_time, test_time)
+                time_point = TimePoint(train_method_name, validation_method, num_of_files, train_time, test_time)
                 self.time_point_list.append(time_point)
 
                 for acc_idx_name in self.acc_idx_name_list:

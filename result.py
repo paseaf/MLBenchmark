@@ -1,4 +1,4 @@
-# Data structures to store results
+# Data structures to store acc_results
 class Result:
     """Data structure to store 5 acc_idx_values and test time"""
     def __init__(self):
