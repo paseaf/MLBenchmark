@@ -22,6 +22,10 @@ def plot(metrics: [str] = ["Cross" for i in range(3)],
                 axs[y, z].set_xticklabels([])
             if z > 0 and z < fig.axes[0].get_subplotspec().get_gridspec().get_geometry()[1]:
                 axs[y, z].set_yticklabels([])
+            if z == fig.axes[0].get_subplotspec().get_gridspec().get_geometry()[1] - 1:
+                axs[y, z].set_ylabel(metrics[y])
+                #axs[y, z].yabel.tick_right
+                #axs[y, z].yabel.set_label_position("right")
             
     for x in range(len(x_values)):
         for i in range(fig.axes[0].get_subplotspec().get_gridspec().get_geometry()[0]):
