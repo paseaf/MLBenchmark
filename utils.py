@@ -45,7 +45,21 @@ def ber(test_set_y, y_predict):
 
 # TODO: Define ce(test_set_y, y_predict)
 
-# TODO: Define cramerv(test_set_y, y_predict)
+# Cramer's V
+# SOURCES:
+# https://github.com/shakedzy/dython/blob/6bc2a2ba3e06faed1608c496629cc56afe5c41b3/dython/nominal.py
+# https://stackoverflow.com/questions/46498455/categorical-features-correlation/46498792#46498792
+# https://stackoverflow.com/questions/20892799/using-pandas-calculate-cram%C3%A9rs-coefficient-matrix
+def cramers_v(test_set_y, y_predict):
+    confusion_matrix = pd.crosstab(test_set_y, y_predict)
+    chi2 = ss.chi2_contingency(confusion_matrix)[0]
+    n = confusion_matrix.sum().sum()
+    phi2 = chi2/n
+    r,k = confusion_matrix.shape
+    phi2corr = max(0, phi2-((k-1)*(r-1))/(n-1))
+    rcorr = r-((r-1)**2)/(n-1)
+    kcorr = k-((k-1)**2)/(n-1)
+    return np.sqrt(phi2corr/min((kcorr-1),(rcorr-1)))
 
 # TODO: Define kappa(test_set_y, y_predict)
 
