@@ -1,5 +1,6 @@
 # Utils to support call on different ML methods and accuracy indices
 from readFileExample import allModels as mlm
+from sklearn.metrics import balanced_accuracy_score, cohen_kappa_score
 
 """Machine Learning Methods"""
 # TODO: determine parameters for all models before training
@@ -40,22 +41,23 @@ def acc(test_set_y, y_predict):
     return correct_count/labels_count
 
 
-def ber(test_set_y, y_predict):
+def ce(test_set_y, y_predict):
     return 1 - acc(test_set_y, y_predict)
 
-# TODO: Define ce(test_set_y, y_predict)
 
+# TODO: Define ce(test_set_y, y_predict)
+ber = balanced_accuracy_score  # (y_true, y_pred)
 # TODO: Define cramerv(test_set_y, y_predict)
 
 # TODO: Define kappa(test_set_y, y_predict)
-
+kappa = cohen_kappa_score   # (y_true, y_pred)
 
 acc_idx = {
     'ACC': acc,
-    'BER': ber,
-    'CE': None,
+    'BER': ber,  # from sklearn
+    'CE': ce,
     'CRAMERV': None,
-    'KAPPA': None
+    'KAPPA': kappa
 }
 
 
