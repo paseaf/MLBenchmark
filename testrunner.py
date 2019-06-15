@@ -1,4 +1,5 @@
 from setrunner import SetRunner
+from utils import acc_idx
 
 
 class TestRunner:
@@ -22,7 +23,7 @@ class TestRunner:
     def validate_all(self, validation_method_list=None, acc_idx_name_list=None):  # TODO: add 'kfold' after implementation
         """Validate on every training subset"""
         validation_method_list = ['train', 'all'] if validation_method_list is None else validation_method_list
-        acc_idx_name_list = ['ACC', 'BER'] if acc_idx_name_list is None else acc_idx_name_list
+        acc_idx_name_list = list(acc_idx.keys()) if acc_idx_name_list is None else acc_idx_name_list
         for set_runner in self.set_runner_list:
             set_runner.validate(validation_method_list, acc_idx_name_list)
 
