@@ -9,7 +9,7 @@ import pandas as pd
 # TODO: determine parameters for all models before training
 mlm_dict = {
     'lda': mlm.modelLDA,
-    'kknn': mlm.modelKNN,
+    'knn': mlm.modelKNN,
     'randomForest': mlm.modelForest,
     'svm': mlm.modelSVM,
     'mlp': mlm.modelMLP,
@@ -67,7 +67,6 @@ def cramers_v(test_set_y, y_predict):
     return np.sqrt(phi2corr/min((kcorr-1),(rcorr-1)))
 
 
-# TODO: Define kappa(test_set_y, y_predict)
 kappa = cohen_kappa_score   # (y_true, y_pred)
 
 acc_idx = {
