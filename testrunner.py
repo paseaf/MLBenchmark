@@ -6,7 +6,7 @@ class TestRunner:
     """Do train and validation for a FileLoader object / on all training subsets"""
     def __init__(self, fileloader):
         self.fileloader = fileloader
-        self.set_runner_list = []
+        self.set_runner_list = []  # type: List[SetRunner]
 
     def init_all(self):
 

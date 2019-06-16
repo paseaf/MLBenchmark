@@ -1,6 +1,6 @@
 # Data structures for plotting
 from collections import namedtuple
-
+from readFileExample.plotting import plot
 
 class AccPoint:
     """Each object represents a point in accuracy metrics diagram"""
@@ -31,6 +31,8 @@ class PlotHelper:
         self.time_points = time_points
         self.acc_results = {}
         self.time_results = {}
+        self.acc_idx_list = []
+        self.train_method_list =[]
 
     def set_results(self):
         self.set_acc_results()
@@ -50,6 +52,11 @@ class PlotHelper:
                 self.acc_results[valid_method] = {}  # add entry to the dict
 
             train_method, acc_idx = acc_point.train_method_name, acc_point.acc_idx_name
+            if train_method not in self.train_method_list:
+                self.train_method_list.append(train_method)
+            if acc_idx not in self.acc_idx_list:
+                self.acc_idx_list.append(acc_idx)
+
             if (train_method, acc_idx) not in self.acc_results[valid_method]:  # add entry
                 self.acc_results[valid_method][(train_method, acc_idx)] = PlotData([], [])
 
@@ -97,3 +104,7 @@ class PlotHelper:
 
     def get_time_plot_names(self):
         return list(self.time_results.keys())
+
+    def plot_acc(self):
+        for valid_method in list(self.acc_results.keys()):
+            plot(self.acc_results[valid_method], self.acc_idx_list, self.train_method_list, valid_method)

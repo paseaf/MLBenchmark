@@ -6,18 +6,18 @@ from plotutils import PlotHelper
 # file_path = '/home/ole/Documents/Informatik/SS19/DBPRO/EuroSAT/2750'  # Ole
 file_path = '../Images_RGB_full/'
 file_large = FileLoader(root_path=file_path, files_per_class=200)
-# file_large.set_class_list(['AnnualCrop', 'Forest', 'SeaLake', 'Pasture', 'HerbaceousVegetation', 'Residential'])
-file_large.set_class_list(['AnnualCrop', 'Forest', 'SeaLake'])
+file_large.set_class_list(['AnnualCrop', 'Forest', 'SeaLake', 'Pasture', 'HerbaceousVegetation', 'Residential'])
+# file_large.set_class_list(['AnnualCrop', 'Forest', 'SeaLake'])
 # jpeg_loader.set_class_list()
 file_large.set_control_set(num_of_bands=3, is_random=True)    # set up control dataset
-file_large.set_training_subsets(num_of_subsets=30, max_percent=0.5)
+file_large.set_training_subsets(num_of_subsets=10, max_percent=0.5)
 
 """Run test and validation"""
 test_runner = TestRunner(file_large)   # set test_runner for running test
 test_runner.init_all()  # initialize set_runner for each training subset
 
 # Check utils.py for Names of train methods, validation methods and accuracy indices
-test_runner.train_all(train_method_list=['randomForest'])    # train all subset with given mlm in train_method_list
+test_runner.train_all(['lda', 'knn'])    # train all subset with given mlm in train_method_list
 # test_runner.train_all(train_method_list=['knn'])    # train all subset with given mlm in train_method_list
 # test_runner.validate_all(validation_method_list=['train', 'all'], acc_idx_name_list=['ACC', 'BER'])  # do validation
 test_runner.validate_all(validation_method_list=['train', 'all'])  # do validation with all acc idx
@@ -45,3 +45,4 @@ print('test')
 """Plot"""
 # TODO: plot
 
+data.plot_acc()
