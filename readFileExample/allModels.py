@@ -85,6 +85,7 @@ def modelMLP(train_set_x, train_set_y):
     # return fit
     m, N = 1, train_set_y.shape[0]
     model = MLPClassifier(hidden_layer_sizes=(int(2*np.sqrt((m+2)*N)), int(m*np.sqrt(N/(m+2)))))
+    # model = MLPClassifier(hidden_layer_sizes=(5,))
     model.fit(train_set_x, train_set_y)
     return model
 

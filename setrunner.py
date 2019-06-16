@@ -11,7 +11,7 @@ class SetRunner:
         self.train_set = train_set
         self.control_set = control_set
         self.model_dict = {}
-        self.train_size = train_set[1].size
+        self.train_size = train_set[1].size  # number of samples in this training set
         self.result_recorder_list = []     # list of ResultRecorder Objects
         self.acc_point_list = []    #
         self.time_point_list = []
@@ -23,17 +23,19 @@ class SetRunner:
         for train_method_name in train_method_list:
             result_recorder = ResultRecorder(self.train_size, train_method_name)
             # train model
+            print(f'Training with {train_method_name} on {self.train_size} files...')
             t0 = time.time()
             model = utils.call_train_method(train_method_name, self.train_set)     # train
             t1 = time.time()
-            result_recorder.train_time = t1 - t0     # save training time to result
+            result_recorder.train_time = t1 - t0     # save training time (seconds) to result
+            print(f'Training finished in {result_recorder.train_time} seconds.')
             self.result_recorder_list.append(result_recorder)
             self.model_dict[train_method_name] = model  # save model to model_dict
 
     def validate_on(self, validation_method, acc_idx_name_list):
         """Validate with ONLY ONE given validation methods"""
         # TODO: implement kfold validation
-        if validation_method == 'train' or 'kfold':
+        if validation_method in ['train', 'kfold']:
             test_set_x, test_set_y = self.train_set
         elif validation_method == 'all':
             test_set_x, test_set_y = self.control_set
@@ -45,10 +47,13 @@ class SetRunner:
             model = self.model_dict[result_recorder.train_method_name]  # get trained model
 
             # predict
+            print(f'Testing model {result_recorder.train_method_name} with {validation_method} '
+                  f'validation method on {test_set_y.size} files...')
             t0 = time.time()
             y_predict = model.predict(test_set_x)
             t1 = time.time()
             result.test_time = t1 - t0    # save validation time to result
+            print(f'Testing finished in {result.test_time} seconds.')
 
             # run accuracy tests
             for acc_idx_name in self.acc_idx_name_list:

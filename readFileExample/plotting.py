@@ -42,12 +42,12 @@ import numpy as np
 
 
 def plot(points_dict: dict, acc_idx_list: list, train_method_list: list, valid_method: str):
-    range_dict = {'ACC': (0.65, 1.05),
-                  'BER': (0.65, 1.05),
-                  'CE': (-0.03, 0.55),
-                  'CRAMERV': (0, 1.05),
-                  'KAPPA': (0, 1.05)}
-    fig, axs = plt.subplots(len(acc_idx_list), len(train_method_list), figsize=(5, 5), gridspec_kw = {'wspace':0, 'hspace':0})
+    range_dict = {'ACC': (-0.03, 1.05),
+                  'BER': (-0.03, 1.05),
+                  'CE': (-0.03, 1.05),
+                  'CRAMERV': (-0.03, 1.05),
+                  'KAPPA': (-0.03, 1.05)}
+    fig, axs = plt.subplots(len(acc_idx_list), len(train_method_list), figsize=(10, 5), gridspec_kw = {'wspace':0, 'hspace':0})
     for train_method_id in range(len(train_method_list)):
         axs[0, train_method_id].set_title(train_method_list[train_method_id])
         for acc_id in range(len(acc_idx_list)):

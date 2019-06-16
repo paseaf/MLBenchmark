@@ -11,7 +11,7 @@ class ResultRecorder:
     def __init__(self, train_set_size, train_method_name):
         self.train_set_size = train_set_size
         self.train_method_name = train_method_name
-        self.train_time = None
+        self.train_time = None  # training time in seconds
         self.results_dict = {'train': None,   # each validation method has a result Object
                              'kfold': None,
                              'all': None}
