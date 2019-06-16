@@ -55,8 +55,11 @@ class FileLoader:
         # read files to np array
         for i in range(files_per_class):
             with open(file_names[i], 'rb') as file_stream:
-                img = np.array(Image.open(file_stream)).flatten() / 255.0  # normalization
-                control_set_x[i, :] = img  # write image vector to the i-th row of X
+                pixels = np.array(Image.open(file_stream)).flatten() / 255.0  # normalization
+                mean = pixels.mean()
+                pixels -= mean  # data centering
+                        # https://machinelearningmastery.com/how-to-manually-scale-image-pixel-data-for-deep-learning/
+                control_set_x[i, :] = pixels  # write image vector to the i-th row of X
         return control_set_x, control_set_label
 
     def set_control_set(self, num_of_bands=3, is_random=False):

@@ -1,5 +1,5 @@
 from setrunner import SetRunner
-from utils import acc_idx
+from utils import acc_idx, mlm_dict
 
 
 class TestRunner:
@@ -16,7 +16,7 @@ class TestRunner:
 
     def train_all(self, train_method_list=None):
         """Train on every training subset"""
-        train_method_list = ['lda'] if train_method_list is None else train_method_list
+        train_method_list = list(mlm_dict.keys()) if train_method_list is None else train_method_list
         for set_runner in self.set_runner_list:
             set_runner.train_all_models(train_method_list)
 
