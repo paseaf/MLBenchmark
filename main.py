@@ -65,5 +65,6 @@ def main(file_path: str, files_per_class: int, mlms: [str] = None, classes: [str
 if __name__ == "__main__":
     # path = '/home/ole/Documents/Informatik/SS19/DBPRO/EuroSAT/2750'  # Ole
     path = '../Images_RGB_full/'
+    #path = 'C:\Users\sechs\Downloads\EuroSAT\2750'
     main(file_path=path, files_per_class=100, classes=['AnnualCrop', 'Forest', 'SeaLake', 'Pasture'],
          mlms=['lda', 'knn', 'randomForest', 'lr', 'mlp', 'ct'])
