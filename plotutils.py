@@ -1,6 +1,6 @@
 # Data structures for plotting
 from collections import namedtuple
-from readFileExample.plotting import plot
+from readFileExample.plotting import plot_acc, plot_time
 
 class AccPoint:
     """Each object represents a point in accuracy metrics diagram"""
@@ -65,31 +65,42 @@ class PlotHelper:
 
     def set_time_results(self):
         """
-        {'valid_method_name/train':{
+        {'valid_method_name':{
                 'train_method': (X, Y)  # X: list of #files
                                         # Y: list of time
             }
         }
         """
         tmp_valid_name = ''  # auxiliary variable to record training time
-        self.time_results['training'] = {}
+
+        valid_methods = self.get_valid_methods() + ['training']
+        for valid_method in valid_methods:
+            self.time_results.setdefault(valid_method, {})
+            for train_method in self.train_method_list:
+                self.time_results[valid_method].setdefault(train_method, PlotData([], []))
         for time_point in self.time_points:
             valid_method, train_method = time_point.validation_method, time_point.train_method_name
-            if valid_method not in self.time_results:
-                self.time_results[valid_method] = {}  # add entry to the dict
-                tmp_valid_name = tmp_valid_name or valid_method  # set to current valid method name if not set yet
-
-            if valid_method == tmp_valid_name:  # store data to time_results['train']
-                if train_method not in self.time_results['training']:
-                    self.time_results['training'][train_method] = PlotData([], [])
-                self.time_results['training'][train_method].X.append(time_point.num_of_files)
-                self.time_results['training'][train_method].Y.append(time_point.train_method_name)
-
-            if train_method not in self.time_results[valid_method]: # add entry for one mlm
-                self.time_results[valid_method][train_method] = PlotData([], [])
-
             self.time_results[valid_method][train_method].X.append(time_point.num_of_files)
             self.time_results[valid_method][train_method].Y.append(time_point.test_time)
+            if valid_method == valid_methods[0]:  # add training time once
+                self.time_results['training'][train_method].X.append(time_point.num_of_files)
+                self.time_results['training'][train_method].Y.append(time_point.train_time)
+            #
+            # if valid_method not in self.time_results:
+            #     self.time_results[valid_method] = {}  # add entry to the dict
+            #     tmp_valid_name = tmp_valid_name or valid_method  # set to current valid method name if not set yet
+            #
+            # if valid_method == tmp_valid_name:  # store data to time_results['train']
+            #     if train_method not in self.time_results['training']:
+            #         self.time_results['training'][train_method] = PlotData([], [])
+            #     self.time_results['training'][train_method].X.append(time_point.num_of_files)
+            #     self.time_results['training'][train_method].Y.append(time_point.train_method_name)
+            #
+            # if train_method not in self.time_results[valid_method]: # add entry for one mlm
+            #     self.time_results[valid_method][train_method] = PlotData([], [])
+            #
+            # self.time_results[valid_method][train_method].X.append(time_point.num_of_files)
+            # self.time_results[valid_method][train_method].Y.append(time_point.test_time)
 
     def get_valid_methods(self):
         return list(self.acc_results.keys())
@@ -105,6 +116,13 @@ class PlotHelper:
     def get_time_plot_names(self):
         return list(self.time_results.keys())
 
-    def plot_acc(self):
+    def plot_acc_all(self):
         for valid_method in list(self.acc_results.keys()):
-            plot(self.acc_results[valid_method], self.acc_idx_list, self.train_method_list, valid_method)
+            plot_acc(self.acc_results[valid_method], self.acc_idx_list, self.train_method_list, valid_method)
+
+    def plot_time_all(self):
+        plot_points = {'Classification': self.time_results['train'],
+                       'Training': self.time_results['training']
+                       }
+        plot_time(plot_points, self.train_method_list)
+

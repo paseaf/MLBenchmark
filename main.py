@@ -58,8 +58,8 @@ def main(file_path: str, files_per_class: int, mlms: [str] = None, classes: [str
     print('test')
 
     """Plot"""
-
-    data.plot_acc()
+    data.plot_acc_all()
+    data.plot_time_all()
 
 
 if __name__ == "__main__":
