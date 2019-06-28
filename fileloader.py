@@ -97,7 +97,7 @@ class FileLoader:
         rows_idx = np.random.randint(0, self.files_per_class, size=samples_per_class)  # list of indices to select from each class
         # create matrix for train set
         (m, n) = (len(self.classlist) * samples_per_class, self.num_of_features)
-        train_set_x = np.empty((0, n))  # TODO: specify dtype for x.
+        train_set_x = np.empty((0, n))
         train_set_y = np.empty(0, dtype=np.int8)
         # col_count = 0
         y_count = 0

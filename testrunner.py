@@ -20,9 +20,9 @@ class TestRunner:
         for set_runner in self.set_runner_list:
             set_runner.train_all_models(train_method_list)
 
-    def validate_all(self, validation_method_list=None, acc_idx_name_list=None):  # TODO: add 'kfold' after implementation
+    def validate_all(self, validation_method_list=None, acc_idx_name_list=None):
         """Validate on every training subset"""
-        validation_method_list = ['train', 'all'] if validation_method_list is None else validation_method_list
+        validation_method_list = ['train', 'kfold', 'all'] if validation_method_list is None else validation_method_list
         acc_idx_name_list = list(acc_idx.keys()) if acc_idx_name_list is None else acc_idx_name_list
         for set_runner in self.set_runner_list:
             set_runner.validate(validation_method_list, acc_idx_name_list)

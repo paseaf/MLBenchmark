@@ -2,6 +2,7 @@ import utils
 from result import Result, ResultRecorder
 import time
 from plotutils import AccPoint, TimePoint
+from sklearn.model_selection import KFold
 
 
 class SetRunner:
@@ -49,16 +50,40 @@ class SetRunner:
             # predict
             print(f'Testing model {result_recorder.train_method_name} with {validation_method} '
                   f'validation method on {test_set_y.size} files...')
-            t0 = time.time()
-            y_predict = model.predict(test_set_x)
-            t1 = time.time()
-            result.test_time = t1 - t0    # save validation time to result
-            print(f'Testing finished in {result.test_time} seconds.')
+            if validation_method == 'kfold':
+                k = min(test_set_y.size, 10)  # k=10 if #test_examples > 10
+                kf = KFold(n_splits=k)
+                # kf.get_n_splits(test_set_x)
+                temp_acc_dict = {}  # temp acc dict to store SUM of acc values for each acc idx
+                t0 = time.time()
+                for train_index, test_index in kf.split(test_set_x):  # iterate through k folds
+                    X_test_fold = test_set_x[test_index]  # get the k-th fold from the test dataset
+                    y_test_fold = test_set_y[test_index]
+                    y_predict_fold = model.predict(X_test_fold)
 
-            # run accuracy tests
-            for acc_idx_name in self.acc_idx_name_list:
-                # TODO: Finish other accuracy indices in utils.py module
-                result.acc_dict[acc_idx_name] = utils.call_acc_idx_method(acc_idx_name, test_set_y, y_predict)
+                    # run accuracy tests for one fold
+                    for acc_idx_name in acc_idx_name_list:
+                        if acc_idx_name not in temp_acc_dict:
+                            temp_acc_dict[acc_idx_name] = 0
+                        temp_acc_dict[acc_idx_name] += utils.call_acc_idx_method(acc_idx_name, y_test_fold, y_predict_fold)
+
+                t1 = time.time()
+                result.test_time = t1 - t0  # save validation time to result
+                print(f'Testing finished in {result.test_time} seconds.')
+
+                # get avg acc value
+                for acc_idx_name in acc_idx_name_list:
+                    result.acc_dict[acc_idx_name] = temp_acc_dict[acc_idx_name] / k  # get average
+            else:
+                t0 = time.time()
+                y_predict = model.predict(test_set_x)
+                t1 = time.time()
+                result.test_time = t1 - t0    # save validation time to result
+                print(f'Testing finished in {result.test_time} seconds.')
+
+                # run accuracy tests
+                for acc_idx_name in self.acc_idx_name_list:
+                    result.acc_dict[acc_idx_name] = utils.call_acc_idx_method(acc_idx_name, test_set_y, y_predict)
 
             # save result of current validation method to dict
             result_recorder.results_dict[validation_method] = result
