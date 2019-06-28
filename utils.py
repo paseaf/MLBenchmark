@@ -48,7 +48,9 @@ def ce(test_set_y, y_predict):
     return 1 - acc(test_set_y, y_predict)
 
 
-ber = balanced_accuracy_score  # (y_true, y_pred)
+def ber(y_true, y_pred):
+    """ Returns 1 - balanced accuracy"""
+    return 1 - balanced_accuracy_score(y_true, y_pred, adjusted=True)  # (y_true, y_pred)
 
 # Cramer's V
 # SOURCES:
