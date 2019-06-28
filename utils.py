@@ -64,6 +64,9 @@ def cramers_v(test_set_y, y_predict):
     phi2corr = max(0, phi2-((k-1)*(r-1))/(n-1))
     rcorr = r-((r-1)**2)/(n-1)
     kcorr = k-((k-1)**2)/(n-1)
+    if min((kcorr-1), (rcorr-1)) == 0:
+        print("denominator is 0, return 0")
+        return 0
     return np.sqrt(phi2corr/min((kcorr-1),(rcorr-1)))
 
 

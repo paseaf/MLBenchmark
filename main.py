@@ -34,7 +34,7 @@ def main(file_path: str, files_per_class: int, mlms: [str] = None, classes: [str
     if mlms is None:
         mlms = ['lda', 'knn', 'svm', 'randomForest', 'lr', 'mlp', 'mlpe', 'ct', 'b']
     test_runner.train_all(train_method_list=mlms)    # train all subset with given mlm in train_method_list
-    valid_methods = ['train', 'kfold', 'all'] if valid_methods is None else valid_methods
+    valid_methods = ['train', 'all'] if valid_methods is None else valid_methods
     test_runner.validate_all(validation_method_list=valid_methods)  # do validation with all acc idx
 
     test_runner.set_all_points()    # set acc_points and time points for plotting
