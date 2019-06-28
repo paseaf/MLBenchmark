@@ -64,14 +64,16 @@ def modelForest(train_set_x, train_set_y, trees = 10):
 use Radial Basis Function as kernel and then GridSearch to find optimal 'gamma' and 'C' parameters
 """
 def modelSVM(train_set_x, train_set_y):
-    C_range = np.logspace(-2, 10, 13)
-    gamma_range = np.logspace(-9, 3, 13)
-    param_grid = {'gamma':gamma_range, 'C': C_range}
-    cv = StratifiedShuffleSplit(n_splits=5, test_size=0.2, random_state=42)
-    model = GridSearchCV(SVC(kernel='rbf'), param_grid=param_grid, cv=cv, n_jobs=-1)
-    fit = model.fit(train_set_x, train_set_y)
-    print(f"optimal hyper-parameters: {fit.best_params_}")
-    return fit
+    # C_range = np.logspace(-2, 10, 13)
+    # gamma_range = np.logspace(-9, 3, 13)
+    # param_grid = {'gamma':gamma_range, 'C': C_range}
+    # cv = StratifiedShuffleSplit(n_splits=5, test_size=0.2, random_state=42)
+    # model = GridSearchCV(SVC(kernel='rbf'), param_grid=param_grid, cv=cv, n_jobs=-1)
+    model = SVC(kernel='rbf', C=10, gamma=1/train_set_y.size)
+    model.fit(train_set_x, train_set_y)
+    # print(f"optimal hyper-parameters: {fit.best_params_}")
+
+    return model
 
 """  
 nr of layers?: start with few hidden neurons and few hidden layers
