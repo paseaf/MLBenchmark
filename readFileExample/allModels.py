@@ -104,12 +104,12 @@ def modelMLPE(train_set_x, train_set_y):
     return model
 
 """  
-CTree
+DTree
 max_depth: The maximum depth of the tree
 min_samples_split: The minimum number of samples required to split an internal node (default=2)
 min_samples_leaf: The minimum number of samples required to be at a leaf node (deafult=1)
 """
-def modelCT(train_set_x, train_set_y):
+def modelDT(train_set_x, train_set_y):
     # ctree = DecisionTreeClassifier(random_state=1)
     # param_grid = {'max_depth':range(1,50), 'min_samples_split':range(1,50)}
     # grid = GridSearchCV(ctree, param_grid, cv=5, scoring='roc_auc')

@@ -32,7 +32,7 @@ def main(file_path: str, files_per_class: int, mlms: [str] = None, classes: [str
 
     # Check utils.py for Names of train methods, validation methods and accuracy indices
     if mlms is None:
-        mlms = ['lda', 'knn', 'svm', 'randomForest', 'lr', 'mlp', 'mlpe', 'ct', 'b']
+        mlms = ['lda', 'knn', 'svm', 'randomForest', 'lr', 'mlp', 'mlpe', 'dt', 'b']
     test_runner.train_all(train_method_list=mlms)    # train all subset with given mlm in train_method_list
     valid_methods = ['train', 'all'] if valid_methods is None else valid_methods
     test_runner.validate_all(validation_method_list=valid_methods)  # do validation with all acc idx
@@ -66,5 +66,5 @@ if __name__ == "__main__":
     # path = '/home/ole/Documents/Informatik/SS19/DBPRO/EuroSAT/2750'  # Ole
     path = '../Images_RGB_full/'
     #path = 'C:\Users\sechs\Downloads\EuroSAT\2750'
-    main(file_path=path, files_per_class=100, classes=['AnnualCrop', 'Forest', 'SeaLake', 'Pasture'],
-         mlms=['lda', 'knn', 'randomForest', 'lr', 'mlp', 'ct'])
+    main(file_path=path, files_per_class=500, classes=['AnnualCrop', 'Forest', 'SeaLake', 'Pasture'],
+         mlms=['lda', 'knn', 'randomForest', 'lr', 'mlp', 'dt'])
