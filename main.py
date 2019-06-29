@@ -7,7 +7,7 @@ def main(file_path: str,
          files_per_class: int = 500,
          mlms: [str] = None,
          classes: [str] = None,
-         num_of_subsets=10,
+         num_of_subsets=20,
          max_percent=0.5,
          is_random=True,
          valid_methods: [str] = None):
@@ -23,7 +23,7 @@ def main(file_path: str,
     :param classes: string list, optional
         (default=['Residential', 'AnnualCrop', 'SeaLake', 'Forest', 'HerbaceousVegetation'])
         list of classes to use. Default:
-    :param num_of_subsets: integer, optional (default=10)
+    :param num_of_subsets: integer, optional (default=20)
         Number of test subsets to use for testing.
         File number of each subset ranges from (1/num_of_sebsets * num_of_files*max_percent) to (num_of_files*max_percent)
     :param max_percent: float, optional (default=0.5)
@@ -84,9 +84,14 @@ if __name__ == "__main__":
     # path = '/home/ole/Documents/Informatik/SS19/DBPRO/EuroSAT/2750'  # Ole
     path = '../Images_RGB_full/'
     #path = 'C:\Users\sechs\Downloads\EuroSAT\2750'
-    main(file_path=path, files_per_class=200,
+    main(file_path=path,
+         files_per_class=100,
+         num_of_subsets=20,
          classes=['Residential', 'AnnualCrop', 'SeaLake', 'Forest', 'HerbaceousVegetation'],
-         mlms=['lda', 'knn', 'randomForest', 'svm', 'mlp', 'mlpe', 'dtree', 'boosting', 'lr'])
+         mlms=['lda', 'knn', 'randomForest', 'svm', 'mlp', 'mlpe', 'dtree', 'boosting', 'lr'],
+         max_percent=0.5,
+         is_random=True,
+         valid_methods=['train', 'all'])
 
 """
 Available ML methods:
@@ -106,4 +111,3 @@ Available validation methods:
     all: validate on all control dataset.
 
 """
-
