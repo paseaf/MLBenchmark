@@ -14,8 +14,8 @@ mlm_dict = {
     'svm': mlm.modelSVM,
     'mlp': mlm.modelMLP,
     'mlpe': mlm.modelMLPE,
-    'ct': mlm.modelCT,
-    'b': mlm.modelBoost,
+    'dtree': mlm.modelDT,
+    'boosting': mlm.modelBoost,
     'lr': mlm.modelLR
 }
 

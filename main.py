@@ -13,12 +13,12 @@ def main(file_path: str,
          valid_methods: [str] = None):
     """
     Run the test on given files with giving ML algorithms.
-    Plot the performance and save the plots in current folder.
+    Plot the performance and save the plot images to current folder.
 
     :param file_path: string. Path of the parent folder of all classes. E.g. ./2750
     :param files_per_class: integer, optional (default=500)
         Number of files per class. All these files are considered as our control set.
-    :param mlms: string list, optional (default=['lda', 'knn', 'randomForest', 'svm', 'mlp', 'mlpe', 'dt', 'b', 'lr'])
+    :param mlms: string list, optional (default=['lda', 'knn', 'randomForest', 'svm', 'mlp', 'mlpe', 'dtree', 'boosting', 'lr'])
         List of ml algorithms to use.
     :param classes: string list, optional
         (default=['Residential', 'AnnualCrop', 'SeaLake', 'Forest', 'HerbaceousVegetation'])
@@ -50,7 +50,7 @@ def main(file_path: str,
 
     # Check utils.py for Names of train methods, validation methods and accuracy indices
     if mlms is None:
-        mlms = ['lda', 'knn', 'randomForest', 'svm', 'mlp', 'mlpe', 'dt', 'b', 'lr']
+        mlms = ['lda', 'knn', 'randomForest', 'svm', 'mlp', 'mlpe', 'dtree', 'boosting', 'lr']
     test_runner.train_all(train_method_list=mlms)    # train all subset with given mlm in train_method_list
     valid_methods = ['train', 'all'] if valid_methods is None else valid_methods
     test_runner.validate_all(validation_method_list=valid_methods)  # do validation with all acc idx
@@ -86,7 +86,7 @@ if __name__ == "__main__":
     #path = 'C:\Users\sechs\Downloads\EuroSAT\2750'
     main(file_path=path, files_per_class=200,
          classes=['Residential', 'AnnualCrop', 'SeaLake', 'Forest', 'HerbaceousVegetation'],
-         mlms=['lda', 'knn', 'randomForest', 'svm', 'mlp', 'mlpe', 'dt', 'b', 'lr'])
+         mlms=['lda', 'knn', 'randomForest', 'svm', 'mlp', 'mlpe', 'dtree', 'boosting', 'lr'])
 
 """
 Available ML methods:
@@ -97,8 +97,8 @@ Available ML methods:
     'svm': 
     'mlp': 
     'mlpe': 
-    'dt': decision tree
-    'b': boosting
+    'dtree': decision tree
+    'boosting': boosting
     'lr': logistic regression
 
 Available validation methods:
