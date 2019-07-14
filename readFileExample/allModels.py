@@ -35,7 +35,7 @@ def modelKNN(train_set_x, train_set_y, n_neighbors=None):
         # print(f"optimal hyper-parameters: {fit.best_params_}")
     # else:
     n_neighbors = int(np.sqrt(train_set_y.shape[0]))    # commented out gridsearch for
-    knn = KNeighborsClassifier(n_neighbors=n_neighbors, weights='distance')
+    knn = KNeighborsClassifier(n_neighbors=n_neighbors, weights='distance', n_jobs=1)
     fit = knn.fit(train_set_x, train_set_y)
     return fit
 
@@ -55,7 +55,7 @@ def modelForest(train_set_x, train_set_y, trees = 10):
 
     # fixed parameter
     model = RandomForestClassifier(n_estimators=100, max_depth=None, min_samples_split=2, bootstrap=True,
-                                   max_features='sqrt', oob_score=True)
+                                   max_features='sqrt', oob_score=True, n_jobs=1)
     model.fit(train_set_x, train_set_y)
 
     return model
@@ -85,8 +85,11 @@ def modelMLP(train_set_x, train_set_y):
     # model = GridSearchCV(MLPClassifier(), param_grid, cv=5, scoring='roc_auc', n_jobs=-1)
     # fit = model.fit(train_set_x, train_set_y)
     # return fit
+
     m, N = 1, train_set_y.shape[0]
-    model = MLPClassifier(hidden_layer_sizes=(int(2*np.sqrt((m+2)*N)), int(m*np.sqrt(N/(m+2)))))
+    model = MLPClassifier(hidden_layer_sizes=(int(np.sqrt((m+2)*N)+2*np.sqrt(N/(m+2))), int(m*np.sqrt(N/(m+2)))))
+    # model = MLPClassifier(hidden_layer_sizes=(10,))
+
     # model = MLPClassifier(hidden_layer_sizes=(5,))
     model.fit(train_set_x, train_set_y)
     return model
@@ -99,7 +102,7 @@ def modelMLPE(train_set_x, train_set_y):
     mlp_1 = MLPClassifier(hidden_layer_sizes=(5,))
     mlp_2 = MLPClassifier(hidden_layer_sizes=(10,))
     mlp_3 = MLPClassifier(hidden_layer_sizes=(15,))
-    ensemble = VotingClassifier(estimators=[('mlp_1',mlp_1), ('mlp_2',mlp_2), ('mlp_3',mlp_3)])
+    ensemble = VotingClassifier(estimators=[('mlp_1',mlp_1), ('mlp_2',mlp_2), ('mlp_3', mlp_3)])
     model = ensemble.fit(train_set_x, train_set_y)
     return model
 
@@ -140,6 +143,6 @@ def modelLR(train_set_x, train_set_y):
     # fit = grid.fit(train_set_x, train_set_y)
     # print(f"optimal hyper-parameters: {fit.best_params_}")
     # return fit
-    model = LogisticRegression(multi_class='ovr', solver='saga', max_iter=200, n_jobs=-1)
+    model = LogisticRegression(multi_class='ovr', solver='saga', max_iter=200, n_jobs=1)
     model.fit(train_set_x, train_set_y)
     return model

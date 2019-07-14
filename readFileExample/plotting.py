@@ -13,7 +13,8 @@ import numpy as np
 # set font size
 TITLE = 18
 TEXT = 16
-
+# set time for diagram file naming
+dt = datetime.datetime.now().replace(microsecond=0).strftime('%Y%m%d_%H.%M')  # timestamp to name file
 
 def plot_acc(points_dict: dict, acc_idx_list: list, train_method_list: list, valid_method: str):
     fig, axs = plt.subplots(len(acc_idx_list), len(train_method_list), figsize=(20, 10),
@@ -37,8 +38,7 @@ def plot_acc(points_dict: dict, acc_idx_list: list, train_method_list: list, val
 
     fig.text(0.5, 0.004, 'Number of files in training', ha='center', fontsize=13)
     fig.text(0.00, 0.5, 'Classification Metric Value', va='center', rotation='vertical', fontsize=14)
-    dt = datetime.datetime.now().replace(microsecond=0).strftime('%Y%m%d_%H%M%S')  # timestamp to name file
-    plt.savefig(f'{dt}_accuracy_result_{valid_method}.jpg')  # filename = [datetime]_[valid_method_name]
+    plt.savefig(f'{dt}_acc_{valid_method}.jpg', dpi=plt.gcf().dpi)  # filename = [datetime]_[valid_method_name]
     plt.show()
 
 
@@ -80,8 +80,7 @@ def plot_time(time_results: dict, train_method_list: list):
 
     plt.gcf().subplots_adjust(left=0.1)
     fig.text(0.01, 0.5, 'Time (s)', fontsize=TITLE, ha='center', va='center', rotation='vertical')
-    dt = datetime.datetime.now().replace(microsecond=0).strftime('%Y%m%d_%H%M%S')  # timestamp to name file
-    plt.savefig(f'{dt}_time_result.jpg')  # filename = [datetime]
+    plt.savefig(f'{dt}_time_result.jpg', dpi=plt.gcf().dpi)  # filename = [datetime]
     plt.show()
 
 
