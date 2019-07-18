@@ -2,7 +2,7 @@
 
 This is the project from our DBPRO SS19 course. The goal of this project is to measure the performance of 9 machine learning algorithms on multi-class image recognition (classification) regarding the **accuracy** and **speed**. The benchmarking process is based on Pirotti et. al.'s paper [1] . The dataset we used is the [EuroSAT Dataset (RGB)](https://github.com/phelber/EuroSAT).
 
-  #### Machine Learning Algorithms benchmarked in this program:
+### Machine Learning Algorithms benchmarked in this program:
   * Linear Discriminant Analysis (lda)
   * K-Nearest Neighbors (knn)
   * Randome Forest (randomForest)
@@ -12,7 +12,8 @@ This is the project from our DBPRO SS19 course. The goal of this project is to m
   * Decision Tree (dtree)
   * Adaptive Boosting (boosting)
   * Logistic Regression (lr)
-#### Accuracy Indices used in this program:
+
+### Accuracy Indices used in this program:
 * Classification Accuracy Rate (ACC)
 * Balanced Error Rate (BER)
 * Classification Error Rate (CE)
