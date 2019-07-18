@@ -18,7 +18,7 @@ This is the project from our DBPRO SS19 course. The goal of this project is to m
 * Balanced Error Rate (BER)
 * Classification Error Rate (CE)
 * CREAMER'S V (CREAMERV)
-* Cohen's kappa index (KAPPA )
+* Cohen's kappa index (KAPPA)
 
 ## Run the program
 
@@ -34,15 +34,9 @@ To run the benchmark program, you need to download and unzip the EuroSAT Dataset
 
 To run the program, you need:
 
-  
-
-```
 
 1. Python version: 3.6+
 2. Libraries: numpy, sci-kit learn, matplotlib, PILLOW
-
-```
-
   
 
 ### Running the benchmark
